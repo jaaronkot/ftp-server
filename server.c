@@ -51,16 +51,12 @@ void* communication(void* _c) {
 */
 void server(int port)
 {
-    //ftp server root path setting
-    char server_root_path [512];
-    getcwd(server_root_path,512);
-
-    if(chroot(server_root_path) !=0 )
-    {
-        printf("%s","chroot erro：please run as root!\n");
-        exit(0);
-    }
-    printf("%s","Now ftp server is running! Waiting for connection ...\n");
+    //set defaul ftp server root work path.You can customize the path.
+   if(chroot(SERVERROOTPATH) !=0 )
+   {
+       printf("%s","chroot erro：please run as root!\n");
+       exit(0);
+   }
     int sock = create_socket(port);
     struct sockaddr_in client_address;
     int len = sizeof(client_address);

@@ -16,6 +16,8 @@
 #ifndef BSIZE
 #define BSIZE 1024
 #endif
+//定义服务器根目录
+#define SERVERROOTPATH "/home/tom"
 
 typedef struct Port
 {

@@ -211,6 +211,14 @@ void ftp_pwd(Command *cmd, State *state)
 void ftp_cwd(Command *cmd, State *state)
 {
     if(state->logged_in){
+//        char cwd[BSIZE] = "";
+//        if((cmd->arg[0] - '/') == 0){
+//            strcpy(cwd,SERVERROOTPATH);
+//            strcat(cwd,cmd->arg);
+//        }else{
+//            strcpy(cwd,cmd->arg);
+//        }
+
         if(chdir(cmd->arg) == 0){
             state->message = "250 Directory successfully changed.\n";
         }else{
@@ -422,14 +430,15 @@ void ftp_rmd(Command *cmd, State *state)
     if(!state->logged_in){
         state->message = "530 Please login first.\n";
     }else{
-        if(rmdir(cmd->arg)==0){
+        char cmd_rm[512];
+        snprintf(cmd_rm,512,"rm -rf %s",cmd->arg);//change by zhaoyou
+        if(system(cmd_rm)/*remove(cmd->arg)*/==0){
             state->message = "250 Requested file action okay, completed.\n";
         }else{
             state->message = "550 Cannot delete directory.\n";
         }
     }
     write_state(state);
-
 }
 
 /** Handle SIZE (RFC 3659) */
@@ -449,9 +458,7 @@ void ftp_size(Command *cmd, State *state)
     }else{
         state->message = "530 Please login with USER and PASS.\n";
     }
-
     write_state(state);
-
 }
 
 /** 
@@ -467,7 +474,6 @@ void str_perm(int perm, char *str_perm)
 
     /* Flags buffer */
     char fbuff[3];
-
     read = write = exec = 0;
 
     int i;
