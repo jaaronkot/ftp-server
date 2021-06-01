@@ -4,10 +4,11 @@ This is a ftp server program written in c .I modified from this version,using th
 You can run it only on linux. 
 
 # Compilation and Run
-
-1. cd to the ftp server dir
-2. make
-3. execute with ./ftp_server
+、、、c
+# cd to the ftp server dir
+ make
+# execute with ./ftp_server
+、、、
 
 # Function introduction
 1. Please run as root.  
